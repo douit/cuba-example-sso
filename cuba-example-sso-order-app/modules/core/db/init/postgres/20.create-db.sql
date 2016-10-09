@@ -1,0 +1,4 @@
+-- begin CESOA_ORDER
+alter table CESOA_ORDER add constraint FK_CESOA_ORDER_CUSTOMER_ID foreign key (CUSTOMER_ID) references CESOA_CUSTOMER(ID)^
+create index IDX_CESOA_ORDER_CUSTOMER on CESOA_ORDER (CUSTOMER_ID)^
+-- end CESOA_ORDER
