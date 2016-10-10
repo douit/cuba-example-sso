@@ -1,16 +1,39 @@
 #!/bin/bash
 
+
+
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo '####################### CUBA Platform Single Sign On Example ############################'
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo '# Preconditions:                                                                        #'
+echo '# - Entries in /etc/hosts for 127.0.0.1 -> auth-app & 127.0.0.1 -> order-app            #'
+echo '# - Docker installed (for postgres installations)                                       #'
+echo '#########################################################################################'
+
+echo '#########################################################################################'
 echo 'starting postgres intances (port: 5433, 5434)'
+echo '#########################################################################################'
 docker run -d -p "5433:5432" --name postgres-auth-app -e POSTGRES_PASSWORD=postgres postgres
 docker run -d -p "5434:5432" --name postgres-order-app -e POSTGRES_PASSWORD=postgres postgres
 
+echo '#########################################################################################'
 echo 'starting auth-app (http://localhost:8081/app)'
-cuba-example-sso-auth-app/gradlew updateDb
-cuba-example-sso-auth-app/gradlew deploy
-cuba-example-sso-auth-app/build/tomcat/bin/startup.sh
+echo '#########################################################################################'
+
+cd cuba-example-sso-auth-app
+./gradlew updateDb setupTomcat deploy start
 
 
+echo '#########################################################################################'
 echo 'starting order-app (http://localhost:8082/app)'
-cuba-example-sso-order-app/gradlew updateDb
-cuba-example-sso-order-app/gradlew deploy
-cuba-example-sso-order-app/build/tomcat/bin/startup.sh
+echo '#########################################################################################'
+cd ../cuba-example-sso-order-app
+./gradlew updateDb setupTomcat deploy start
+
